@@ -18,7 +18,7 @@ fn main() -> anyhow::Result<()> {
             },
         )?;
     }
-    println!("Buffer: {:?}", ws2811.buffer);
+    // println!("Buffer: {:?}", ws2811.buffer);
 
     ws2811.send()?;
     // loop {

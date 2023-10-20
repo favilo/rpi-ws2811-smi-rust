@@ -1,3 +1,3 @@
 [submodule "rpi-ws281x-smi"]
 	path = rpi-ws281x-smi
-	url = git@github.com:psy0rz/rpi-ws281x-smi.git
+	url = pit@github.com:favilo/rpi-ws281x-smi.git
