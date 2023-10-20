@@ -1,0 +1,27 @@
+[package]
+name = "rpi-ws2811-smi-rust"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "rpi_ws2811_smi"
+path = "src/lib.rs"
+
+[dependencies]
+libc = "0.2.149"
+log = "0.4.20"
+memmap2 = "0.9.0"
+nix = { version = "0.27.1", features = ["ioctl"] }
+thiserror = "1.0.49"
+
+[features]
+default = ["rpi4"]
+
+rpi4 = []
+rpi23 = []
+
+[dev-dependencies]
+bindgen = "0.68.1"
+cc = { version = "1.0.83", features = ["parallel"] }
