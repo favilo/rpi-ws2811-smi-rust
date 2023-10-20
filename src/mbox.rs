@@ -1,6 +1,5 @@
 use std::{fs::File, os::fd::AsRawFd};
 
-use libc::c_void;
 use memmap2::MmapRaw;
 use nix::request_code_readwrite;
 
@@ -30,13 +29,13 @@ pub(crate) struct Msg {
 pub(crate) struct VcMap {
     file: File,
     h: u32,
-    size: usize,
+    size: u32,
     bus: *mut c_void,
     virt: Option<MmapRaw>,
 }
 
 impl VcMap {
-    pub(crate) fn map_uncached_mem(size: usize) -> Result<Self, Error> {
+    pub(crate) fn map_uncached_mem(size: u32) -> Result<Self, Error> {
         // void *ret;
         // mp->size = PAGE_ROUNDUP(size);
         let size = page_roundup(size);

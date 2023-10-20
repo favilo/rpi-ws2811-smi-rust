@@ -10,7 +10,6 @@ name = "rpi_ws2811_smi"
 path = "src/lib.rs"
 
 [dependencies]
-libc = "0.2.149"
 log = "0.4.20"
 memmap2 = "0.9.0"
 nix = { version = "0.27.1", features = ["ioctl"] }
@@ -22,6 +21,10 @@ default = ["rpi4"]
 rpi4 = []
 rpi23 = []
 
-[dev-dependencies]
+[build-dependencies]
 bindgen = "0.68.1"
-cc = { version = "1.0.83", features = ["parallel"] }
+cc = { version = "1.0.83", features = [] }
+
+[dev-dependencies]
+anyhow = "1.0.75"
+hex = "0.4.3"

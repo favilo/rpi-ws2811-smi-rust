@@ -5,7 +5,7 @@ use memmap2::{MmapOptions, MmapRaw};
 use crate::{error::Error, smi::REG32, MemMap, PAGE_SIZE};
 
 #[inline(always)]
-pub(crate) fn page_roundup(size: usize) -> usize {
+pub(crate) fn page_roundup(size: u32) -> u32 {
     if size % PAGE_SIZE == 0 {
         size
     } else {
@@ -13,7 +13,7 @@ pub(crate) fn page_roundup(size: usize) -> usize {
     }
 }
 
-pub(crate) fn map_segment(phys: *mut std::ffi::c_void, size: usize) -> Result<MmapRaw, Error> {
+pub(crate) fn map_segment(phys: *mut std::ffi::c_void, size: u32) -> Result<MmapRaw, Error> {
     let size = page_roundup(size);
     let file = File::options()
         .read(true)
@@ -22,12 +22,12 @@ pub(crate) fn map_segment(phys: *mut std::ffi::c_void, size: usize) -> Result<Mm
         .open("/dev/mem")?;
     let map = MmapOptions::new()
         .offset(phys as u64)
-        .len(size)
+        .len(size as usize)
         .map_raw(&file)?;
     Ok(map)
 }
 
-pub(crate) unsafe fn gpio_mode(gpio_regs: &MemMap, pin: u8, mode: u8) -> Result<(), Error> {
+pub(crate) unsafe fn gpio_mode(gpio_regs: &MemMap, pin: u8, mode: u32) -> Result<(), Error> {
     // volatile uint32_t *reg = REG32(gpio_regs, GPIO_MODE0) + pin / 10, shift = (pin % 10) * 3;
     #[allow(unused_unsafe)]
     let reg = unsafe { REG32!(gpio_regs, 0).offset(pin as isize / 10) };
