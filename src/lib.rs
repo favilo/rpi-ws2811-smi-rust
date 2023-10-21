@@ -37,7 +37,7 @@ impl Rgba {
 #[derive(Debug)]
 pub struct Ws2811;
 
-impl<'s> Ws2811<'s> {
+impl Ws2811 {
     pub fn new(led_count: usize) -> Result<Self, Error> {
         unsafe { leds_init(led_count as c_int) };
         // let buffer = unsafe { from_raw_parts(leds_get_buffer(), TX_BUFF_LEN!(CHAN_MAXLEDS) as usize) };
