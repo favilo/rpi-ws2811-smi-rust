@@ -24,6 +24,7 @@ fn main() {
         .target("armv7-unknown-linux-musleabihf")
         .compiler("arm-linux-musleabihf-gcc")
         .define("PHYS_REG_BASE", "0xFE000000")
+        .opt_level(3)
         .files(c_src.iter())
         .include("rpi-ws281x-smi/smi");
 
