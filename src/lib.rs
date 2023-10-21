@@ -2,10 +2,12 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
+mod consts;
 mod error;
 
 use std::{os::raw::c_int, slice::from_raw_parts};
 
+use consts::*;
 use error::Error;
 
 include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
@@ -40,7 +42,7 @@ pub struct Ws2811<'s> {
 impl<'s> Ws2811<'s> {
     pub fn new(led_count: usize) -> Result<Self, Error> {
         unsafe { leds_init(led_count as c_int) };
-        let buffer = unsafe { from_raw_parts(leds_get_buffer(), 4 + 24 * 3 * 512 + 4) };
+        let buffer = unsafe { from_raw_parts(leds_get_buffer(), TX_BUFF_LEN!(CHAN_MAXLEDS) as usize) };
 
         Ok(Self { buffer })
     }
