@@ -4,13 +4,14 @@
 
 mod consts;
 mod error;
+mod smileds;
+mod rpi_dma_utils;
 
-use std::{os::raw::c_int, slice::from_raw_parts};
+use std::{os::raw::c_int};
 
-use consts::*;
 use error::Error;
 
-include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
+// include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 
 #[derive(Debug, Default, Clone, Copy, PartialEq)]
 #[repr(C)]
@@ -22,9 +23,9 @@ pub struct Rgba {
 }
 
 impl Rgba {
-    unsafe fn to_c(&self) -> color_t {
-        color_t {
-            component: color_t__bindgen_ty_1 {
+    unsafe fn to_c(&self) -> smileds::color_t {
+        smileds::color_t {
+            component: smileds::C2RustUnnamed_9 {
                 r: self.r,
                 g: self.g,
                 b: self.b,
@@ -39,7 +40,7 @@ pub struct Ws2811;
 
 impl Ws2811 {
     pub fn new(led_count: usize) -> Result<Self, Error> {
-        unsafe { leds_init(led_count as c_int) };
+        unsafe { smileds::leds_init(led_count as c_int) };
         // let buffer = unsafe { from_raw_parts(leds_get_buffer(), TX_BUFF_LEN!(CHAN_MAXLEDS) as usize) };
 
         // Ok(Self { buffer })
@@ -47,17 +48,17 @@ impl Ws2811 {
     }
 
     pub fn clear(&mut self) -> Result<(), Error> {
-        unsafe { leds_clear() };
+        unsafe { smileds::leds_clear() };
         Ok(())
     }
 
     pub fn send(&mut self) -> Result<(), Error> {
-        unsafe { leds_send() };
+        unsafe { smileds::leds_send() };
         Ok(())
     }
 
     pub fn set_pixel(&mut self, channel: usize, pixel: usize, color: Rgba) -> Result<(), Error> {
-        unsafe { leds_set_pixel(channel as u8, pixel as u16, color.to_c()) };
+        unsafe { smileds::leds_set_pixel(channel as u8, pixel as u16, color.to_c()) };
 
         Ok(())
     }

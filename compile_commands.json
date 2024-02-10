@@ -1,0 +1,32 @@
+[
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-I",
+            "rpi-ws281x-smi/smi",
+            "-D",
+            "PHYS_REG_BASE=0xFE000000",
+            "-Wno-pointer-to-int-cast",
+            "-Wno-int-to-pointer-cast",
+            "rpi-ws281x-smi/smi/rpi_dma_utils.c"
+        ],
+        "directory": "/home/klah/git/iot/rpi-ws2811-smi-rust",
+        "file": "rpi-ws281x-smi/smi/rpi_dma_utils.c"
+    },
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-I",
+            "rpi-ws281x-smi/smi",
+            "-D",
+            "PHYS_REG_BASE=0xFE000000",
+            "-Wno-pointer-to-int-cast",
+            "-Wno-int-to-pointer-cast",
+            "rpi-ws281x-smi/smileds.c"
+        ],
+        "directory": "/home/klah/git/iot/rpi-ws2811-smi-rust",
+        "file": "rpi-ws281x-smi/smileds.c"
+    }
+]
