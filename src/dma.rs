@@ -52,32 +52,3 @@ pub(crate) struct DmaCb {
     _unusued: u32,
 }
 
-macro_rules! MEM_BUS_ADDR {
-    ($mp: expr, $a: expr) => {
-        ($a as u32 - $mp.virt.as_ref().unwrap().as_ptr() as u32 + $mp.bus as u32)
-    };
-}
-
-macro_rules! BUS_PHYS_ADDR {
-    ($a: expr) => {
-        ($a as usize & !0xC0000000) as *mut std::ffi::c_void
-    };
-}
-
-macro_rules! REG_BUS_ADDR {
-    ($m: expr, $x: expr) => {
-        ($m.bus as usize + $x) as *mut std::ffi::c_void
-    };
-}
-
-macro_rules! DMA_REG {
-    ($ch: expr, $r: expr) => {
-        if ($r) == DMA_ENABLE {
-            DMA_ENABLE
-        } else {
-            $ch * 0x100 + $r
-        }
-    };
-}
-
-pub(crate) use {BUS_PHYS_ADDR, DMA_REG, MEM_BUS_ADDR, REG_BUS_ADDR};

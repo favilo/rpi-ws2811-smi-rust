@@ -6,7 +6,7 @@ pub(crate) const SMI_TIMING: [u8; 4] = [10, 15, 30, 15];
 pub(crate) const SMI_TIMING: [u8; 4] = [10, 10, 20, 10];
 
 /// GPIO pin for D0 output
-pub(crate) const LED_D0_PIN: u8 = 8;
+pub(crate) const LED_D0_PIN: usize = 8;
 /// Number of LED channels (8 or 16)
 pub(crate) const LED_NCHANS: usize = 16;
 /// Number of bits per LED
@@ -22,7 +22,20 @@ pub(crate) const CHAN_MAXLEDS: usize = 512;
 /// DMA request threshold
 pub(crate) const REQUEST_THRESH: usize = 2;
 
-pub(crate) const GPIO_ALT1: u8 = 5;
+pub(crate) const GPIO_IN: usize = 0;
+#[allow(unused)]
+pub(crate) const GPIO_OUT: usize = 1;
+#[allow(unused)]
+pub(crate) const GPIO_ALT0: usize = 4;
+pub(crate) const GPIO_ALT1: usize = 5;
+#[allow(unused)]
+pub(crate) const GPIO_ALT2: usize = 6;
+#[allow(unused)]
+pub(crate) const GPIO_ALT3: usize = 7;
+#[allow(unused)]
+pub(crate) const GPIO_ALT4: usize = 3;
+#[allow(unused)]
+pub(crate) const GPIO_ALT5: usize = 2;
 
 pub(crate) const LED_DLEN: usize = LED_NBITS * BIT_NPULSES;
 
@@ -36,19 +49,19 @@ pub(crate) const PHYS_REG_BASE: *const c_void = 0x20000000 as *const c_void;
 pub(crate) const GPIO_BASE: *const c_void = PHYS_REG_BASE.wrapping_offset(0x200000);
 pub(crate) const DMA_BASE: *const c_void = PHYS_REG_BASE.wrapping_offset(0x007000);
 pub(crate) const CLK_BASE: *const c_void = PHYS_REG_BASE.wrapping_offset(0x101000);
-pub(crate) const SMI_BASE: *const c_void = PHYS_REG_BASE.wrapping_offset(0x600000);
 pub(crate) const BUS_REG_BASE: *mut c_void = 0x7E000000 as *mut c_void;
 pub(crate) const PAGE_SIZE: usize = 0x1000;
+pub(crate) const DMA_CHAN: usize = 10;
 
 macro_rules! LED_TX_OFFSET {
     ($n: expr) => {
-        LED_PREBITS + (LED_DLEN * $n)
+        crate::consts::LED_PREBITS + (crate::consts::LED_DLEN * $n)
     };
 }
 
 macro_rules! TX_BUFF_LEN {
     ($n: expr) => {
-        LED_TX_OFFSET!($n) + LED_POSTBITS
+        crate::consts::LED_TX_OFFSET!($n) + crate::consts::LED_POSTBITS
     };
 }
 
